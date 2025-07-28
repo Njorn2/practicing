@@ -3,13 +3,30 @@ import java.util.List;
 import java.util.HashMap;
 
 class Gesto {
-    public String gesto;
-    public List<Gesto> perde;
-    public List<Gesto> ganha;
+    String gesto;
+    List<Gesto> perde;
+    List<Gesto> ganha;
     
     public Gesto(String gesto) {
         this.gesto = gesto;
     }
+
+    public List<Gesto> getPerde() {
+        return perde;
+    }
+
+    public void setPerde(List<Gesto> perde) {
+        this.perde = perde;
+    }
+
+    public List<Gesto> getGanha() {
+        return ganha;
+    }
+
+    public void setGanha(List<Gesto> ganha) {
+        this.ganha = ganha;
+    }
+    
 }
 
 class Gestos {
@@ -22,13 +39,13 @@ class Gestos {
         Gesto papel = new Gesto("PAPEL");
         Gesto tesoura = new Gesto("TESOURA");
         
-        pedra.perde = Arrays.asList(papel);
-        papel.perde = Arrays.asList(tesoura);
-        tesoura.perde = Arrays.asList(pedra);
+        pedra.setPerde(Arrays.asList(papel));
+        papel.setPerde(Arrays.asList(tesoura));
+        tesoura.setPerde(Arrays.asList(pedra));
         
-        tesoura.ganha = Arrays.asList(papel);
-        pedra.ganha = Arrays.asList(tesoura);
-        papel.ganha = Arrays.asList(pedra);
+        tesoura.setGanha(Arrays.asList(papel));
+        pedra.setGanha(Arrays.asList(tesoura));
+        papel.setGanha(Arrays.asList(pedra));
         
         addGesto(pedra);
         addGesto(papel);
@@ -66,7 +83,14 @@ enum GestosEnum {
 }
 
 class Jogador {
-    public GestosEnum gesto;
+    GestosEnum gesto;
+
+    public GestosEnum getGesto() {
+        return gesto;
+    }
+    public void setGest(GestosEnum gesto) {
+        this.gesto = gesto;
+    }
 }
 
 enum Resultado {
