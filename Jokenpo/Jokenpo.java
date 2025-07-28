@@ -2,66 +2,66 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.HashMap;
 
-class Gesto {
-    String gesto;
-    List<Gesto> perde;
-    List<Gesto> ganha;
+class Gesture {
+    String gesture;
+    List<Gesture> loses;
+    List<Gesture> wins;
     
-    public Gesto(String gesto) {
-        this.gesto = gesto;
+    public Gesture(String gesture) {
+        this.gesture = gesture;
     }
 
-    public List<Gesto> getPerde() {
-        return perde;
+    public List<Gesture> getLoses() {
+        return loses;
     }
 
-    public void setPerde(List<Gesto> perde) {
-        this.perde = perde;
+    public void setLoses(List<Gesture> loses) {
+        this.loses = loses;
     }
 
-    public List<Gesto> getGanha() {
-        return ganha;
+    public List<Gesture> getWins() {
+        return wins;
     }
 
-    public void setGanha(List<Gesto> ganha) {
-        this.ganha = ganha;
+    public void setWins(List<Gesture> wins) {
+        this.wins = wins;
     }
     
 }
 
-class Gestos {
-    HashMap<String, Gesto> gestos;
+class Gestures {
+    HashMap<String, Gesture> gestures;
 
-    public Gestos() {
-        gestos = new HashMap<>();
+    public Gestures() {
+        gestures = new HashMap<>();
 
-        Gesto pedra = new Gesto("PEDRA");
-        Gesto papel = new Gesto("PAPEL");
-        Gesto tesoura = new Gesto("TESOURA");
+        Gesture pedra = new Gesture("PEDRA");
+        Gesture papel = new Gesture("PAPEL");
+        Gesture tesoura = new Gesture("TESOURA");
         
-        pedra.setPerde(Arrays.asList(papel));
-        papel.setPerde(Arrays.asList(tesoura));
-        tesoura.setPerde(Arrays.asList(pedra));
+        pedra.setLoses(Arrays.asList(papel));
+        papel.setLoses(Arrays.asList(tesoura));
+        tesoura.setLoses(Arrays.asList(pedra));
         
-        tesoura.setGanha(Arrays.asList(papel));
-        pedra.setGanha(Arrays.asList(tesoura));
-        papel.setGanha(Arrays.asList(pedra));
+        tesoura.setWins(Arrays.asList(papel));
+        pedra.setWins(Arrays.asList(tesoura));
+        papel.setWins(Arrays.asList(pedra));
         
-        addGesto(pedra);
-        addGesto(papel);
-        addGesto(tesoura);
+        addGesture(pedra);
+        addGesture(papel);
+        addGesture(tesoura);
     }
     
-    public void addGesto(Gesto gesto) {
-        gestos.put(gesto.gesto, gesto);
+    public void addGesture(Gesture gesture) {
+        gestures.put(gesture.gesture, gesture);
     }
 
-    public Gesto getGesto(GestosEnum nome) {
-        return gestos.get(nome.toString());
+    public Gesture getGesture(GestureEnum gestureName) {
+        return gestures.get(gestureName.toString());
     }
 }
 
-enum GestosEnum {
+enum GestureEnum {
     PEDRA { 
         @Override
         public String toString() {
@@ -82,63 +82,63 @@ enum GestosEnum {
       };
 }
 
-class Jogador {
-    GestosEnum gesto;
+class Player {
+    GestureEnum gesture;
 
-    public GestosEnum getGesto() {
-        return gesto;
+    public GestureEnum getGesture() {
+        return gesture;
     }
-    public void setGest(GestosEnum gesto) {
-        this.gesto = gesto;
+    public void setGesture(GestureEnum gesture) {
+        this.gesture = gesture;
     }
 }
 
-enum Resultado {
+enum Result {
     GANHA,
     PERDE,
     EMPATA;
 }
 
-class Jogo {
-    Jogador jogador1;
-    Jogador jogador2;
+class Game {
+    Player player1;
+    Player player2;
     
-    public Jogo() {
-        jogador1 = new Jogador();
-        jogador2 = new Jogador();
+    public Game() {
+        player1 = new Player();
+        player2 = new Player();
     }
 
-    public void jogar() {
-        jogador1.gesto = GestosEnum.PEDRA;
-        jogador2.gesto = GestosEnum.PAPEL;
-        System.out.println("Jogo 1: Jogador 1 " + compare(jogador1, jogador2));
+    public void play() {
+        player1.setGesture(GestureEnum.PEDRA);
+        player2.setGesture(GestureEnum.PAPEL);
+        System.out.println("Round 1: Player 1 " + compare(player1, player2));
         
-        jogador1.gesto = GestosEnum.PEDRA;
-        jogador2.gesto = GestosEnum.TESOURA;
-        System.out.println("Jogo 2: Jogador 1 " + compare(jogador1, jogador2));
+        player1.setGesture(GestureEnum.PEDRA);
+        player2.setGesture(GestureEnum.TESOURA);
+        System.out.println("Round 2: Player 1 " + compare(player1, player2));
         
-        jogador1.gesto = GestosEnum.PEDRA;
-        jogador2.gesto = GestosEnum.PEDRA;
-        System.out.println("Jogo 3: " + compare(jogador1, jogador2));
+        player1.setGesture(GestureEnum.PEDRA);
+        player2.setGesture(GestureEnum.PEDRA);
+        System.out.println("Round 3: " + compare(player1, player2));
     }
 
-    private Resultado compare(Jogador jogador1, Jogador jogador2) {
-        Gestos gestos = new Gestos();
-        Gesto gesto1 = gestos.getGesto(jogador1.gesto);
-        Gesto gesto2 = gestos.getGesto(jogador2.gesto);
+    private Result compare(Player player1, Player player2) {
+        Gestures gestures = new Gestures();
+        Gesture gesture1 = gestures.getGesture(player1.getGesture());
+        Gesture gesture2 = gestures.getGesture(player2.getGesture());
 
-        if (gesto1.perde.contains(gesto2)) {
-            return Resultado.PERDE;
+        if (gesture1.getLoses().contains(gesture2)) {
+            return Result.PERDE;
         }
-        if (gesto1.ganha.contains(gesto2)) {
-            return Resultado.GANHA;
+        if (gesture1.getWins().contains(gesture2)) {
+            return Result.GANHA;
         }
-        return Resultado.EMPATA;
+        return Result.EMPATA;
     }
 }
 
 public class Jokenpo {
     public static void main(String[] args) {
-        new Jogo().jogar();
+        new Game().play();
     }
 }
