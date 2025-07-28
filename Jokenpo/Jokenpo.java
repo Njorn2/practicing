@@ -35,21 +35,21 @@ class Gestures {
     public Gestures() {
         gestures = new HashMap<>();
 
-        Gesture pedra = new Gesture("PEDRA");
-        Gesture papel = new Gesture("PAPEL");
-        Gesture tesoura = new Gesture("TESOURA");
+        Gesture rock = new Gesture(GestureEnum.ROCK.toString());
+        Gesture paper = new Gesture(GestureEnum.PAPER.toString());
+        Gesture scissors = new Gesture(GestureEnum.SCISSORS.toString());
         
-        pedra.setLoses(Arrays.asList(papel));
-        papel.setLoses(Arrays.asList(tesoura));
-        tesoura.setLoses(Arrays.asList(pedra));
+        rock.setLoses(Arrays.asList(paper));
+        paper.setLoses(Arrays.asList(scissors));
+        scissors.setLoses(Arrays.asList(rock));
         
-        tesoura.setWins(Arrays.asList(papel));
-        pedra.setWins(Arrays.asList(tesoura));
-        papel.setWins(Arrays.asList(pedra));
+        scissors.setWins(Arrays.asList(paper));
+        rock.setWins(Arrays.asList(scissors));
+        paper.setWins(Arrays.asList(rock));
         
-        addGesture(pedra);
-        addGesture(papel);
-        addGesture(tesoura);
+        addGesture(rock);
+        addGesture(paper);
+        addGesture(scissors);
     }
     
     public void addGesture(Gesture gesture) {
@@ -62,22 +62,22 @@ class Gestures {
 }
 
 enum GestureEnum {
-    PEDRA { 
+    ROCK { 
         @Override
         public String toString() {
-          return "PEDRA";
+          return "ROCK";
         }
       },
-    PAPEL { 
+    PAPER { 
         @Override
         public String toString() {
-          return "PAPEL";
+          return "PAPER";
         }
       },
-    TESOURA { 
+    SCISSORS { 
         @Override
         public String toString() {
-          return "TESOURA";
+          return "SCISSORS";
         }
       };
 }
@@ -94,9 +94,9 @@ class Player {
 }
 
 enum Result {
-    GANHA,
-    PERDE,
-    EMPATA;
+    WINS,
+    LOSES,
+    TIED;
 }
 
 class Game {
@@ -109,16 +109,16 @@ class Game {
     }
 
     public void play() {
-        player1.setGesture(GestureEnum.PEDRA);
-        player2.setGesture(GestureEnum.PAPEL);
+        player1.setGesture(GestureEnum.ROCK);
+        player2.setGesture(GestureEnum.PAPER);
         System.out.println("Round 1: Player 1 " + compare(player1, player2));
         
-        player1.setGesture(GestureEnum.PEDRA);
-        player2.setGesture(GestureEnum.TESOURA);
+        player1.setGesture(GestureEnum.ROCK);
+        player2.setGesture(GestureEnum.SCISSORS);
         System.out.println("Round 2: Player 1 " + compare(player1, player2));
         
-        player1.setGesture(GestureEnum.PEDRA);
-        player2.setGesture(GestureEnum.PEDRA);
+        player1.setGesture(GestureEnum.ROCK);
+        player2.setGesture(GestureEnum.ROCK);
         System.out.println("Round 3: " + compare(player1, player2));
     }
 
@@ -128,12 +128,12 @@ class Game {
         Gesture gesture2 = gestures.getGesture(player2.getGesture());
 
         if (gesture1.getLoses().contains(gesture2)) {
-            return Result.PERDE;
+            return Result.LOSES;
         }
         if (gesture1.getWins().contains(gesture2)) {
-            return Result.GANHA;
+            return Result.WINS;
         }
-        return Result.EMPATA;
+        return Result.TIED;
     }
 }
 
